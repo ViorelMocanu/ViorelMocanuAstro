@@ -1,0 +1,82 @@
+---
+// Component Imports
+import BaseHead from '../components/BaseHead.astro';
+import BlogHeader from '../components/BlogHeader.astro';
+import BlogPostPreview from '../components/BlogPostPreview.astro';
+import {Code, Markdown, Prism, Debug} from 'astro/components';
+
+const data = Astro.fetchContent('../pages/posts/*.md'); // returns an array of posts that live at ./src/pages/post/*.md
+
+const serverObject = {
+  a: 0,
+  b: "string",
+  c: {
+    nested: "object"
+  }
+}
+
+const x = await import("/social.png") // files in the public directory are served at the root path. Instead of /public/social.png, use /social.png.
+
+const path = Astro.site.pathname;
+
+interface MarkdownFrontmatter {
+	publishDate: number;
+}
+
+// Component Script:
+// You can write any JavaScript/TypeScript that you'd like here.
+// It will run during the build, but never in the browser.
+// All variables are available to use in the HTML template below.
+let title = 'Example Blog';
+let description = 'The perfect starter for your perfect blog.';
+let permalink = 'https://example.com/';
+
+// Data Fetching: List all Markdown posts in the repo.
+
+let allPosts = await Astro.fetchContent('./posts/*.md');
+allPosts = allPosts.sort((a, b) => new Date(b.publishDate).valueOf() - new Date(a.publishDate).valueOf());
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/core-concepts/astro-components/
+
+---
+
+<html lang="en">
+	<head>
+		<BaseHead {title} {description} {permalink} />
+	</head>
+
+	<body>
+		<BlogHeader />
+		<h1>Welcome to {path}</h1>
+		<div class="wrapper">
+			<main class="content">
+				<section class="intro">
+					<h1 class="latest">{title}</h1>
+					<p>{description}</p>
+				</section>
+				<section aria-label="Blog post list">
+					{allPosts.map((p) => <BlogPostPreview post={p} />)}
+				</section>
+			</main>
+		</div>
+		<Code code={`const foo = 'bar';`} lang="js" />
+		<Prism lang="js" code={`const foo = 'bar';`} />
+		<Code code={`const foo = 'bar';`} lang="js" wrap />
+<div>
+{data.slice(0, 3).map((post) => (
+  <article>
+    <h1>{post.title}</h1>
+    <p>{post.description}</p>
+    <a href={post.url}>Read more</a>
+  </article>
+))}
+</div>
+		<img src={x.default} />
+		<Debug {serverObject} />
+		<Debug {x} />
+		<Markdown>
+			# Markdown syntax is now supported! **Yay!**
+		</Markdown>
+	</body>
+</html>

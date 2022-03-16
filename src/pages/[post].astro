@@ -1,0 +1,42 @@
+---
+import {Markdown, Debug} from 'astro/components';
+const { post } = Astro.request.params;
+const allPosts = await Astro.fetchContent('./posts/*.md');
+const filteredData = allPosts.filter((thePost) => thePost.url === '/posts/' + post);
+/*
+export async function getStaticPaths() {
+  return ['en', 'ro'].map(lang => ({ params: { lang: lang } }));
+}
+*/
+export async function getStaticPaths() {
+	const posts = [
+		{slug: 'test', category: "astro", title: "API Reference"},
+		{slug: 'test2', category: "react", title: "Creating a React Counter!"}
+	];
+	const allPosts = await Astro.fetchContent('./posts/*.md');
+	let allPostSlugs = allPosts.map((p) => {
+			return {
+				params: { post: p.url.replace('/posts/','') },
+				props: { p }
+			}
+		});
+	allPostSlugs.shift();
+	console.log(allPostSlugs);
+
+	/*return posts.map(
+		(currentPost) => {
+			return {
+				params: { post: currentPost.slug },
+				props: { currentPost }
+			}
+		}
+	);*/
+	return allPostSlugs;
+}
+// const {currentPost} = Astro.props;
+---
+
+<article class="Post">
+	<Debug {filteredData} />
+	<Markdown content={filteredData[0].astro.source} />
+</article>

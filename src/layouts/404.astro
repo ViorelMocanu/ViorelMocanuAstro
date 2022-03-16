@@ -1,0 +1,18 @@
+---
+import BlogHeader from '../components/BlogHeader.astro';
+import '../styles/main.scss';
+
+
+const { content } = Astro.props;
+---
+
+<html>
+	<head>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-lucario.css"/>
+	</head>
+
+	<body>
+		<BlogHeader />
+		<slot />
+	</body>
+</html>
