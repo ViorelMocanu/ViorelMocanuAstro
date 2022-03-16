@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /login
+
+Sitemap: https://www.viorelmocanu.ro/sitemap.xml
