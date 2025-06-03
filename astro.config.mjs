@@ -14,13 +14,6 @@ export default /** @type {import('astro').AstroUserConfig} */ ({
 	dist: './dist/',
 	src: './src/',
 	pages: './src/pages/',
-	// Enable the Preact renderer to support Preact JSX components.
-	renderers: [
-		'@astrojs/renderer-svelte',
-		'@astrojs/renderer-vue',
-		'@astrojs/renderer-react',
-		'@astrojs/renderer-preact',
-	],
 	vite: {},
 	buildOptions: {
 		site: 'https://www.viorelmocanu.ro/',
