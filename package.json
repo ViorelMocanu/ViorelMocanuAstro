@@ -26,7 +26,7 @@
 		"verify:fix": "pnpm lint:fix && pnpm typecheck && pnpm test:unit && pnpm format:fix",
 		"prepare": ""
 	},
-	"devDependencies": {
+	"dependencies": {
 		"astro": "^5.8.1",
 		"sass": "^1.89.1"
 	}
