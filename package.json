@@ -27,7 +27,7 @@
 		"prepare": ""
 	},
 	"dependencies": {
-		"astro": "^5.8.1",
+		"astro": "^5.14.3",
 		"sass": "^1.89.1"
 	}
 }
